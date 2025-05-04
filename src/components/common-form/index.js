@@ -12,13 +12,14 @@ const CommonForm = ({
 	setFormData,
 	handleFileChange,
 }) => {
+
 	const renderInputByComponentType = (control) => {
 		let content = null;
 		switch (control.componentType) {
 			case "input":
 				content = (
-					<div className="relative flex items-center mt-8">
-						<Label htmlFor={control.name}>{control.label}</Label>
+					<div key={control.id} className=" relative mt-8">
+						<Label className='text-base font-semibold mb-2' htmlFor={control.name}>{control.label}</Label>
 						<Input
 							type="text"
 							disabled={control.disabled}
@@ -29,7 +30,7 @@ const CommonForm = ({
 							onChange={(e) =>
 								setFormData({ ...formData, [e.target.name]: e.target.value })
 							}
-							className="w-full rounded-md h-[60px] px-4 border bg-gray-100 text-lg outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:drop-shadow-lg focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+							className="w-full rounded-md h-[60px] px-4 border bg-gray-100 text-sm md:text-base outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:drop-shadow-lg focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
 						/>
 					</div>
 				);
@@ -38,6 +39,7 @@ const CommonForm = ({
 			case "file":
 				content = (
 					<Label
+						key={control.id}
 						htmlFor={control.name}
 						className="flex bg-gray-100 items-center px-3 py-3 mx-auto mt-6 text-center border-2 border-dashed rounded-lg cursor-pointer"
 					>
@@ -49,7 +51,7 @@ const CommonForm = ({
 
 			default:
 				content = (
-					<div className="relative flex items-center mt-8">
+					<div key={control.id} className="relative flex items-center mt-8">
 						<Label htmlFor={control.name}>{control.label}</Label>
 						<Input
 							type="text"
