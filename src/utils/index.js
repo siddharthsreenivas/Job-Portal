@@ -1,3 +1,4 @@
+
 export const recruiterOnBoardFormControls = [
 	{
 		label: "Name",
@@ -153,19 +154,83 @@ export const initialCandidateFormData = {
 	githubProfile: "",
 };
 
-export const initialCandidateAccountFormData = {
-	name: "",
-	currentJobLocation: "",
-	preferedJobLocation: "",
-	currentSalary: "",
-	noticePeriod: "",
-	skills: "",
-	currentCompany: "",
-	previousCompanies: "",
-	totalExperience: "",
-	college: "",
-	collegeLocation: "",
-	graduatedYear: "",
-	linkedinProfile: "",
-	githubProfile: "",
-};
+// export const initialCandidateAccountFormData = {
+// 	name: "",
+// 	currentJobLocation: "",
+// 	preferedJobLocation: "",
+// 	currentSalary: "",
+// 	noticePeriod: "",
+// 	skills: "",
+// 	currentCompany: "",
+// 	previousCompanies: "",
+// 	totalExperience: "",
+// 	college: "",
+// 	collegeLocation: "",
+// 	graduatedYear: "",
+// 	linkedinProfile: "",
+// 	githubProfile: "",
+// };
+
+export const postNewJobFormControls = [
+	{
+		label: "Company Name",
+		name: "companyName",
+		placeholder: "Company Name",
+		componentType: "input",
+		disabled: true,
+		id: 1
+	},
+	{
+		label: "Job Title",
+		name: "title",
+		placeholder: "Enter job title",
+		componentType: "input",
+		id: 2
+	},
+	{
+		label: "Job Type",
+		name: "type",
+		placeholder: 'Enter job type',
+		componentType: "input",
+		id: 3
+	},
+	{
+		label: "Location",
+		name: "location",
+		placeholder: 'Enter job location',
+		componentType: "input",
+		id: 4
+	},
+	{
+		label: "Experience",
+		name: "experience",
+		placeholder: 'Enter experience required',
+		componentType: "input",
+		id: 5
+	},
+	{
+		label: "Description",
+		name: "description",
+		placeholder: 'Enter job description',
+		componentType: "input",
+		id: 6
+	},
+	{
+		label: "Skills Required",
+		name: "skills",
+		placeholder: 'Enter job skills needed',
+		componentType: "input",
+		id: 7
+	}
+	
+]
+
+export const initialPostNewJobFormData = {
+	companyName: "",
+	title: '',
+	type: '',
+	location: '',
+	experience: '',
+	description: '',
+	skills: ''
+}

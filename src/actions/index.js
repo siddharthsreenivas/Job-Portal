@@ -1,6 +1,7 @@
 'use server'
 
 import { connectToDatabase } from "@/database";
+import { Job } from "@/models/job";
 import Profile from "@/models/profile";
 import { revalidatePath } from "next/cache";
 
@@ -26,3 +27,19 @@ export const fetchProfileAction = async (id) => {
     const result = await Profile.findOne({userId: id})
     return JSON.parse(JSON.stringify(result))
 }
+
+export const postNewJobAction = async (formData, pathToRevalidate) => {
+    await connectToDatabase()
+    await Job.create(formData)
+    revalidatePath(pathToRevalidate);
+}
+
+export const fetchJobsForRecruiterAction = async (id) => {
+    await connectToDatabase()
+    const result = await Job.find({recruiterId: id})
+    return JSON.parse(JSON.stringify(result));
+}
+
+export const fetchJobsForCandidateAction = async () => {
+	await connectToDatabase();
+};
