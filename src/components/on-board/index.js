@@ -9,7 +9,7 @@ import {
 	initialRecruiterFormData,
 	recruiterOnBoardFormControls,
 } from "@/utils";
-import { createProfile } from "@/actions";
+import { createProfileAction } from "@/actions";
 import { useUser } from "@clerk/nextjs";
 
 const OnBoard = () => {
@@ -23,8 +23,6 @@ const OnBoard = () => {
 
 	const currentAuthUser = useUser();
 	const { user } = currentAuthUser;
-	console.log(user);
-	
 
 	const handleTabChange = (value) => {
 		setCurrentTab(value);
@@ -35,13 +33,13 @@ const OnBoard = () => {
 			(key) => recruiterFormData[key] !== ""
 		);
 	};
-	// const handleCandidateFormValid = () => {
-	// 		return Object.keys(candidateFormData).every(
-	// 			(key) => candidateFormData[key] !== ""
-	// 		);
-	// 	};
+	// function handleCandidateFormValid() {
+	// 	return Object.keys(candidateFormData).every(
+	// 		(key) => candidateFormData[key].trim() !== ""
+	// 	);
+	// }
 
-	const createProfileAction = async () => {
+	const createProfile = async () => {
 		const data = {
 			recruiterInfo: recruiterFormData,
 			role: "recruiter",
@@ -49,7 +47,7 @@ const OnBoard = () => {
 			userId: user?.id,
 			email: user?.primaryEmailAddress?.emailAddress,
 		};
-		await createProfile(data, "/onboard");
+		await createProfileAction(data, "/onboard");
 	};
 
 	return (
@@ -82,7 +80,7 @@ const OnBoard = () => {
 						formData={recruiterFormData}
 						setFormData={setRecruiterFormData}
 						isBtnDisabled={!handleRecruiterFormValid()}
-						action={createProfileAction}
+						action={createProfile}
 					/>
 				</TabsContent>
 			</Tabs>

@@ -133,13 +133,6 @@ export const candidateOnBoardFormControls = [
 		componentType: "input",
 		id: 13,
 	},
-	{
-		label: "Linkedin Profile ",
-		name: "linkedinProfile",
-		placeholder: "Enter your linkedin profile ",
-		componentType: "input",
-		id: 14,
-	},
 ];
 
 export const initialCandidateFormData = {
