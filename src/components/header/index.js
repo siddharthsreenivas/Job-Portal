@@ -57,7 +57,7 @@ const Header = ({ user, profileInfo }) => {
 						</Button>
 					</SheetTrigger>
 					<SheetContent side="left" className="pt-4">
-						<SheetTitle className="px-6 mt-5 text-lg font-extrabold">
+						<SheetTitle className="px-6 mt-5 text-2xl font-extrabold">
 							JOBSCO.
 						</SheetTitle>
 						{/* <Link href={"#"} className="mr-6 hidden lg:flex">
@@ -79,7 +79,7 @@ const Header = ({ user, profileInfo }) => {
 						</div>
 					</SheetContent>
 				</Sheet>
-				<Link href={"/"} className="hidden text-lg font-extrabold md:flex mr-6">
+				<Link href={"/"} className="hidden text-2xl font-extrabold md:flex mr-6">
 					JOBSCO.
 				</Link>
 				<nav className="ml-auto hidden md:flex gap-6">
@@ -94,7 +94,7 @@ const Header = ({ user, profileInfo }) => {
 							</Link>
 						) : null
 					)}
-					<div className="flex itec">
+					<div className="flex items-center">
 						<UserButton />
 					</div>
 				</nav>
