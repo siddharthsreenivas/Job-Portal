@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 import JobApplicants from "../job-applicants";
 
 const RecruiterJobCard = ({ jobItem, jobApplications }) => {
-	console.log(jobApplications);
+	
 
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 	const [currentCandidateDetails, setCurrentCandidateDetails] = useState(null);
