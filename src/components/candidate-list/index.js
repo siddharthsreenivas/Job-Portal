@@ -1,6 +1,9 @@
 "use client";
 
-import { getCandidateDetailsByIdAction } from "@/actions";
+import {
+	getCandidateDetailsByIdAction,
+	updateJobApplicationAction,
+} from "@/actions";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogTitle } from "../ui/dialog";
 import { Building2, Check, FileUser, MapPin, X } from "lucide-react";
@@ -27,16 +30,32 @@ const CandidateList = ({
 	};
 
 	const handlePreviewResume = () => {
-		const {data} = supabaseClient.storage.from('job-board').getPublicUrl(currentCandidateDetails?.candidateInfo?.resume)
+		const { data } = supabaseClient.storage
+			.from("job-board")
+			.getPublicUrl(currentCandidateDetails?.candidateInfo?.resume);
+		const a = document.createElement("a");
+		a.href = data?.publicUrl;
+		a.setAttribute("download", "Resume.pdf");
+		a.setAttribute("target", "_blank");
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+	};
 
-		const a = document.createElement('a')
-		a.href = data?.publicUrl
-		a.setAttribute('download', 'Resume.pdf')
-		a.setAttribute('target', '_blank')
-		document.body.appendChild(a)
-		a.click()
-		document.body.removeChild(a)
-	}
+	const handleUpdateJobStatus = async (getCurrentStatus) => {
+		let cpyJobApplicants = [...jobApplications];
+		const indexOfCurrentJobApplicant = cpyJobApplicants.findIndex(
+			(item) => item.candidateUserID === currentCandidateDetails?.userId
+		);
+		const jobApplicantsToUpdate = {
+			...cpyJobApplicants[indexOfCurrentJobApplicant],
+			status:
+				cpyJobApplicants[indexOfCurrentJobApplicant].status.concat(
+					getCurrentStatus
+				),
+		};
+		await updateJobApplicationAction(jobApplicantsToUpdate, "/jobs");
+	};
 
 	return (
 		<>
@@ -130,14 +149,68 @@ const CandidateList = ({
 								<FileUser />
 								Resume
 							</Button>
-							<Button className="h-11 px-5">
-								<Check />
-								Select
-							</Button>
-							<Button className="h-11 px-5">
-								<X />
-								Reject
-							</Button>
+							{!jobApplications
+								.find(
+									(item) =>
+										item.candidateUserID === currentCandidateDetails?.userId
+								)
+								?.status.includes("rejected") && (
+								<Button
+									onClick={() => handleUpdateJobStatus("selected")}
+									className="h-11 px-5"
+									disabled={jobApplications
+										.find(
+											(item) =>
+												item.candidateUserID === currentCandidateDetails?.userId
+										)
+										?.status.includes("selected")}
+								>
+									{jobApplications
+										.find(
+											(item) =>
+												item.candidateUserID === currentCandidateDetails?.userId
+										)
+										?.status.includes("selected") ? (
+										"Selected"
+									) : (
+										<>
+											<Check />
+											Select
+										</>
+									)}
+								</Button>
+							)}
+							{!jobApplications
+								.find(
+									(item) =>
+										item.candidateUserID === currentCandidateDetails?.userId
+								)
+								?.status.includes("selected") && (
+								<Button
+									onClick={() => handleUpdateJobStatus("rejected")}
+									className="h-11 px-5"
+									disabled={jobApplications
+										.find(
+											(item) =>
+												item.candidateUserID === currentCandidateDetails?.userId
+										)
+										?.status.includes("rejected")}
+								>
+									{jobApplications
+										.find(
+											(item) =>
+												item.candidateUserID === currentCandidateDetails?.userId
+										)
+										?.status.includes("rejected") ? (
+										"Rejected"
+									) : (
+										<>
+											<X />
+											Reject
+										</>
+									)}
+								</Button>
+							)}
 						</div>
 					</DialogFooter>
 				</DialogContent>
