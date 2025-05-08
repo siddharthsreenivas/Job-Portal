@@ -92,3 +92,9 @@ export const getCandidateDetailsByIdAction = async (candidateId) => {
 	const result = await Profile.findOne({ userId: candidateId });
 	return JSON.parse(JSON.stringify(result));
 };
+
+export const createFilterCategoryAction = async () => {
+	await connectToDatabase()
+	const result = await Job.find({})
+	return JSON.parse(JSON.stringify(result));
+}

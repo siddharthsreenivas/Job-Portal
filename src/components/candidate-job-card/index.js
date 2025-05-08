@@ -18,11 +18,6 @@ import { createJobApplicationAction } from "@/actions";
 const CandidateJobCard = ({ jobItem, profileInfo, jobApplications }) => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-	console.log(jobItem);
-	console.log(jobApplications);
-	
-	
-
 	const handJobApply = async () => {
 		await createJobApplicationAction(
 			{
@@ -38,9 +33,6 @@ const CandidateJobCard = ({ jobItem, profileInfo, jobApplications }) => {
 		);
 		setIsDrawerOpen(false);
 	};
-
-	console.log(jobApplications.some((item) => item.jobID === jobItem?._id));
-	
 
 	return (
 		<>
