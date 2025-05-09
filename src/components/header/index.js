@@ -14,7 +14,7 @@ import { useState } from "react";
 // import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 
 const Header = ({ user, profileInfo }) => {
-	const [isOpen, setIsOpen] = useState(false)
+	const [isOpen, setIsOpen] = useState(false);
 
 	const menuItems = [
 		{
@@ -80,6 +80,10 @@ const Header = ({ user, profileInfo }) => {
 									<Link
 										key={i}
 										href={`${item.path}`}
+										onClick={() => {
+											setIsOpen(false)
+											sessionStorage.removeItem("filterParams");
+										}}
 										className="flex w-full items-center py-2 text-lg font-semibold"
 									>
 										{item.label}
@@ -102,6 +106,7 @@ const Header = ({ user, profileInfo }) => {
 							<Link
 								key={i}
 								href={`${item.path}`}
+								onClick={() => sessionStorage.removeItem("filterParams")}
 								className="inline-flex group h-9 w-max items-center rounded-md bg-white px-4 py-2 text-base font-medium"
 							>
 								{item.label}

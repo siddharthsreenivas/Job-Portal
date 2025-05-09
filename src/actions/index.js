@@ -41,9 +41,16 @@ export const fetchJobsForRecruiterAction = async (id) => {
 	return JSON.parse(JSON.stringify(result));
 };
 
-export const fetchJobsForCandidateAction = async () => {
+export const fetchJobsForCandidateAction = async (filterParams = {}) => {
 	await connectToDatabase();
-	const result = await Job.find({});
+	let updatedParams = {}
+	
+	Object.keys(filterParams).forEach(filterKey => {
+		updatedParams[filterKey] = { $in: filterParams[filterKey].split(',')}
+	})
+	
+	const result = await Job.find(filterParams && Object.keys(filterParams).length > 0 ? updatedParams : {});
+	
 	return JSON.parse(JSON.stringify(result));
 };
 

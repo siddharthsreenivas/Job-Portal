@@ -1,6 +1,6 @@
 "use client";
 
-import { filterMenuDataArray } from "@/utils";
+import { filterMenuDataArray, formUrlQuery } from "@/utils";
 import CandidateJobCard from "../candidate-job-card";
 import PostNewJob from "../post-new-job";
 import RecruiterJobCard from "../recruiter-job-card";
@@ -13,6 +13,7 @@ import {
 } from "../ui/menubar";
 import { Label } from "../ui/label";
 import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const JobListing = ({
 	user,
@@ -23,6 +24,8 @@ const JobListing = ({
 }) => {
 	
 	const [filterParams, setFilterParams] = useState({});
+	const searchParams = useSearchParams()
+	const router = useRouter()
 
 	useEffect(() => {
 		const stored = sessionStorage.getItem("filterParams");
@@ -32,6 +35,20 @@ const JobListing = ({
 			setFilterParams({})
 		}
 	},[])
+
+	useEffect(() => {
+		if(filterParams && Object.keys(filterParams).length > 0){
+			let url = ''
+			
+			url = formUrlQuery({
+				params: searchParams.toString(),
+				dataToAdd: filterParams
+			})
+			
+			router.push(url, {scroll: false})
+		}
+	}, [filterParams, searchParams]);
+	
 
 	const filterMenu = filterMenuDataArray.map((item) => ({
 		id: item.id,

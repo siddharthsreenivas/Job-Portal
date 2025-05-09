@@ -1,3 +1,4 @@
+import qs from "query-string";
 
 export const recruiterOnBoardFormControls = [
 	{
@@ -5,21 +6,21 @@ export const recruiterOnBoardFormControls = [
 		name: "name",
 		placeholder: "Enter your name",
 		componentType: "input",
-        id: 1
+		id: 1,
 	},
 	{
 		label: "Company Name",
 		name: "companyName",
 		placeholder: "Enter your company name",
 		componentType: "input",
-        id: 2
+		id: 2,
 	},
 	{
 		label: "Company Role",
 		name: "companyRole",
 		placeholder: "Enter your company role",
 		componentType: "input",
-        id: 3
+		id: 3,
 	},
 ];
 
@@ -178,62 +179,61 @@ export const postNewJobFormControls = [
 		placeholder: "Company Name",
 		componentType: "input",
 		disabled: true,
-		id: 1
+		id: 1,
 	},
 	{
 		label: "Job Title",
 		name: "title",
 		placeholder: "Enter job title",
 		componentType: "input",
-		id: 2
+		id: 2,
 	},
 	{
 		label: "Job Type",
 		name: "type",
-		placeholder: 'Enter job type',
+		placeholder: "Enter job type",
 		componentType: "input",
-		id: 3
+		id: 3,
 	},
 	{
 		label: "Location",
 		name: "location",
-		placeholder: 'Enter job location',
+		placeholder: "Enter job location",
 		componentType: "input",
-		id: 4
+		id: 4,
 	},
 	{
 		label: "Experience",
 		name: "experience",
-		placeholder: 'Enter experience required',
+		placeholder: "Enter experience required",
 		componentType: "input",
-		id: 5
+		id: 5,
 	},
 	{
 		label: "Description",
 		name: "description",
-		placeholder: 'Enter job description',
+		placeholder: "Enter job description",
 		componentType: "input",
-		id: 6
+		id: 6,
 	},
 	{
 		label: "Skills Required",
 		name: "skills",
-		placeholder: 'Enter job skills needed',
+		placeholder: "Enter job skills needed",
 		componentType: "input",
-		id: 7
-	}
-	
-]
+		id: 7,
+	},
+];
 
 export const initialPostNewJobFormData = {
 	companyName: "",
-	title: '',
-	type: '',
-	location: '',
-	experience: '',
-	description: '',
-	skills: ''
-}
+	title: "",
+	type: "",
+	location: "",
+	experience: "",
+	description: "",
+	skills: "",
+};
 
 export const filterMenuDataArray = [
 	{
@@ -253,3 +253,21 @@ export const filterMenuDataArray = [
 		label: "Location",
 	},
 ];
+
+export const formUrlQuery = ({ params, dataToAdd }) => {
+	let currentUrl = qs.parse(params);
+	
+	if (Object.keys(dataToAdd).length > 0) {
+		Object.keys(dataToAdd).map((key) => {
+			if (dataToAdd[key].length === 0) delete currentUrl[key];
+			else currentUrl[key] = dataToAdd[key].join(",");
+		});
+	}
+
+	return qs.stringifyUrl(
+		{ url: window.location.pathname, query: currentUrl },
+		{
+			skipNull: true,
+		}
+	);
+};

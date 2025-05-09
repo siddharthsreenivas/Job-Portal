@@ -4,14 +4,13 @@ import { redirect } from "next/navigation";
 
 async function Home() {
 	const user = await currentUser();
-	console.log(user);
-	
+	console.log("userInfo : ", user);
 
-  const profileInfo = await fetchProfileAction(user?.id)
+	const profileInfo = await fetchProfileAction(user?.id);
 
-  if(user && !profileInfo?._id) redirect('/onboard')
+	if (user && !profileInfo?._id) redirect("/onboard");
 
-	return <div>Main Content</div>
+	return <div>Main Content</div>;
 }
 
 export default Home;
