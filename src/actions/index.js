@@ -105,3 +105,39 @@ export const createFilterCategoryAction = async () => {
 	const result = await Job.find({})
 	return JSON.parse(JSON.stringify(result));
 }
+
+export const updateProfileAction = async (data, pathToRevalidate) => {
+	await connectToDatabase();
+	const {
+		userId,
+		role,
+		email,
+		isPremiumUser,
+		memberShipType,
+		memberShipStartDate,
+		memberShipEndDate,
+		recruiterInfo,
+		candidateInfo,
+		_id,
+	} = data;
+
+	await Profile.findOneAndUpdate(
+		{
+			_id: _id,
+		},
+		{
+			userId,
+			role,
+			email,
+			isPremiumUser,
+			memberShipType,
+			memberShipStartDate,
+			memberShipEndDate,
+			recruiterInfo,
+			candidateInfo,
+		},
+		{ new: true }
+	);
+
+	revalidatePath(pathToRevalidate);
+}

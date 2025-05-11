@@ -23,7 +23,7 @@ const OnBoard = () => {
 	const [recruiterFormData, setRecruiterFormData] = useState(
 		initialRecruiterFormData
 	);
-	const [candidateFormData, setcandidateFormData] = useState(
+	const [candidateFormData, setCandidateFormData] = useState(
 		initialCandidateFormData
 	);
 	const [file, setFile] = useState(null);
@@ -59,7 +59,7 @@ const OnBoard = () => {
 				upsert: false,
 			});
 		if (data) {
-			setcandidateFormData({
+			setCandidateFormData({
 				...candidateFormData,
 				resume: data.path,
 			});
@@ -112,7 +112,7 @@ const OnBoard = () => {
 						formControls={candidateOnBoardFormControls}
 						buttonText={"Onboard as Candidate"}
 						formData={candidateFormData}
-						setFormData={setcandidateFormData}
+						setFormData={setCandidateFormData}
 						handleFileChange={handleFileChange}
 						isBtnDisabled={!handleCandidateFormValid()}
 						action={createProfile}
