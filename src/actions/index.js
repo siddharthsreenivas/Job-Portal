@@ -6,25 +6,12 @@ import { Job } from "@/models/job";
 import Profile from "@/models/profile";
 import { revalidatePath } from "next/cache";
 
-const stripe = require("stripe")(
-	"sk_test_51RNYsMPauiss00TRVIDDnRTK7QSZ8mY7mMo3dLkS8MRwLs3QUT391siCXxwc30L9NvlKBwOctizZQnGPkvYcsWqC006tnTqXAz"
-);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export const createProfileAction = async (formData, pathToRevalidate) => {
 	await connectToDatabase();
 	await Profile.create(formData);
 	revalidatePath(pathToRevalidate);
-
-	// try {
-
-	// } catch (error) {
-	//     console.log(error);
-	//     return Response.json({
-	//         success: false,
-	//         message: 'Something went wrong! Please try again later.'
-	//     })
-
-	// }
 };
 
 export const fetchProfileAction = async (id) => {
