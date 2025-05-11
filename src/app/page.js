@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 async function Home() {
 	const user = await currentUser();
-	console.log("userInfo : ", user);
+	// console.log("userInfo : ", user);
 
 	const profileInfo = await fetchProfileAction(user?.id);
 

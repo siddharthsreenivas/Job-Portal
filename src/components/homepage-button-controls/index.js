@@ -14,7 +14,7 @@ const HomePageButtonControls = ({ user, profileInfo }) => {
 			<Button onClick={() => router.push("/jobs")} className="h-11 px-5">
 				{user
 					? profileInfo?.role === "candidate"
-						? "Browse Jobs"
+						? "Browse Jobs" 
 						: "Jobs Dashboard"
 					: "Find Jobs"}
 			</Button>
