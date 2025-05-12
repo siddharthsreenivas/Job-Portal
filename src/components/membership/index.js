@@ -46,29 +46,28 @@ const Membership = ({ profileInfo }) => {
 		const fetchCurrentPlanFromSessionStorage = JSON.parse(
 			sessionStorage.getItem("currentPlan")
 		);
-        console.log(
-					"fetchCurrentPlanFromSessionStorage",
-					fetchCurrentPlanFromSessionStorage
-				);
-        
-		await updateProfileAction({
-			...profileInfo,
-			isPremiumUser: true,
-			memberShipType: fetchCurrentPlanFromSessionStorage?.type,
-			memberShipStartDate: new Date().toString(),
-			memberShipEndDate: new Date(
-				new Date().getFullYear() + fetchCurrentPlanFromSessionStorage?.type ===
-				"basic"
-					? 1
-					: fetchCurrentPlanFromSessionStorage?.type === "teams"
-					? 2
-					: 5,
-				new Date().getMonth(),
-				new Date().getDay()
-			),
-		}, '/membership');
-        console.log(profileInfo);
-        
+
+		const yearsToAdd =
+			fetchCurrentPlanFromSessionStorage?.type === "basic"
+				? 1
+				: fetchCurrentPlanFromSessionStorage?.type === "teams"
+				? 2
+				: 5;
+
+		await updateProfileAction(
+			{
+				...profileInfo,
+				isPremiumUser: true,
+				memberShipType: fetchCurrentPlanFromSessionStorage?.type,
+				memberShipStartDate: new Date().toString(),
+				memberShipEndDate: new Date(
+					new Date().getFullYear() + yearsToAdd,
+					new Date().getMonth(),
+					new Date().getDate()
+				),
+			},
+			"/membership"
+		);
 	};
 
 	useEffect(() => {
@@ -79,15 +78,28 @@ const Membership = ({ profileInfo }) => {
 		<div className="mx-auto max-w-7xl">
 			<div className="flex items-baseline justify-between border-b pb-6 pt-24">
 				<h1 className="text-4xl font-bold tracking-tight text-gray-950">
-					Choose Your Best Plan
+					{profileInfo?.isPremiumUser
+						? "You are a Premium User"
+						: "Choose Your Best Plan"}
 				</h1>
+				<div>
+					{profileInfo?.isPremiumUser && (
+						<Button className="h-11 px-5">
+							{
+								membershipPlans.find(
+									(item) => item.type === profileInfo?.memberShipType
+								).heading
+							}
+						</Button>
+					)}
+				</div>
 			</div>
 			<div className="py-20 pb-24 pt-6">
 				<div className="container mx-auto p-0 space-y-8">
 					<div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
-						{membershipPlans.map((plan, i) => (
+						{membershipPlans.map((plan, idx) => (
 							<CommonCard
-								key={i}
+								key={idx}
 								icon={
 									<div className="flex justify-between">
 										<div>
@@ -97,14 +109,25 @@ const Membership = ({ profileInfo }) => {
 									</div>
 								}
 								title={`$ ${plan.price} /yr`}
-								description={plan.type}
+								description={
+									plan.type.charAt(0).toUpperCase() + plan.type.slice(1)
+								}
 								footerContent={
-									<Button
-										onClick={() => handlePayment(plan)}
-										className="h-11 px-5"
-									>
-										Get Premium
-									</Button>
+									profileInfo?.memberShipType === "enterprise" ||
+									(profileInfo?.memberShipType === "basic" && idx === 0) ||
+									(profileInfo?.memberShipType === "teams" &&
+										idx >= 0 &&
+										idx < 2) ? null : (
+										<Button
+											onClick={() => handlePayment(plan)}
+											className="h-11 px-5"
+										>
+											{profileInfo?.memberShipType === "basic" ||
+											profileInfo?.memberShipType === "teams"
+												? "Update Plan"
+												: "Get Premium"}
+										</Button>
+									)
 								}
 							/>
 						))}
