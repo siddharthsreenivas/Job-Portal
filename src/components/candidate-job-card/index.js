@@ -14,11 +14,17 @@ import {
 } from "@/components/ui/drawer";
 import { MapPin } from "lucide-react";
 import { createJobApplicationAction } from "@/actions";
+import { toast } from "sonner";
 
 const CandidateJobCard = ({ jobItem, profileInfo, jobApplications }) => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
 	const handJobApply = async () => {
+		if (!profileInfo?.isPremiumUser && jobApplications.length >= 2) {
+			setIsDrawerOpen(false);
+			toast("Job Apply Limit Reached. Buy Membership to apply for more jobs");
+			return;
+		}
 		await createJobApplicationAction(
 			{
 				recruiterUserID: jobItem?.recruiterId,

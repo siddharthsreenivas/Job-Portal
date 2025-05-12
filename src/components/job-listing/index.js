@@ -105,7 +105,8 @@ const JobListing = ({
 												>
 													<div
 														className={`h-4 w-4 p-0.5 border rounded-sm border-gray-800 ${
-															filterParams?.[filterMenuItem.id]?.indexOf(item) > -1
+															filterParams?.[filterMenuItem.id]?.indexOf(item) >
+															-1
 																? "bg-gray-600/50"
 																: "bg-transparent"
 														} `}
@@ -120,7 +121,7 @@ const JobListing = ({
 								))}
 							</Menubar>
 						) : (
-							<PostNewJob profileInfo={profileInfo} />
+							<PostNewJob jobList={jobList} profileInfo={profileInfo} />
 						)}
 					</div>
 				</div>

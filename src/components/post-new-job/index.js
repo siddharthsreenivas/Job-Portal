@@ -6,13 +6,24 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import CommonForm from "../common-form";
 import { initialPostNewJobFormData, postNewJobFormControls } from "@/utils";
 import { postNewJobAction } from "@/actions";
+import { toast } from "sonner";
 
-const PostNewJob = ({ profileInfo }) => {
+
+const PostNewJob = ({ jobList, profileInfo }) => {
 	const [showJobDialog, setShowJobDialog] = useState(false);
 	const [jobFormData, setJobFormData] = useState({
 		...initialPostNewJobFormData,
 		companyName: profileInfo?.recruiterInfo?.companyName,
 	});
+
+	const handleNewJob = () => {
+		if (!profileInfo?.isPremiumUser && jobList.length >= 2){
+			toast("Job Posting Limit Reached. Buy Membership to post more jobs");
+			return
+		}
+		setShowJobDialog(true);
+
+	}
 
 	const handlePostNewButtonValid = () => {
 		return Object.keys(jobFormData).every(
@@ -40,7 +51,7 @@ const PostNewJob = ({ profileInfo }) => {
 	return (
 		<div>
 			<Button
-				onClick={() => setShowJobDialog(true)}
+				onClick={handleNewJob}
 				className="flex h-11 items-center justify-center px-5"
 			>
 				Post A Job
